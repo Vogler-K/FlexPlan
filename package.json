@@ -15,6 +15,7 @@
   "type": "commonjs",
   "main": "./src/main.js",
   "scripts": {
-    "test": "browser-sync start --server 'public' --files 'public'"
+    "test": "browser-sync start --server 'public' --files 'public'",
+    "start": "node src/main.js"
   }
 }

@@ -49,3 +49,6 @@ build/
 
 # Windows system files
 Thumbs.db
+
+# SSL Certificates
+*.pem
