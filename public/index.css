@@ -1,0 +1,33 @@
+body {
+    height: 100vh;
+    display: flex;
+    font-size: 120%;
+    flex-direction: column;
+    font-family: "Share Tech Mono", monospace;
+    background: linear-gradient(to right, darkblue, darkmagenta);
+}
+html,
+body {
+    overflow: hidden;
+}
+.header {
+    display: flex;
+    align-items: center;
+    padding: 7px;
+    margin-bottom: 1rem;
+}
+.header,
+.header * {
+    box-sizing: border-box;
+}
+.header #logo {
+    height: 5lh;
+    width: auto;
+}
+.header #logotext {
+    color: white;
+}
+.header .right {
+    text-align: right;
+    margin-left: auto;
+}

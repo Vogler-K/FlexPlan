@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Limelight&family=Major+Mono+Display&family=Share+Tech+Mono&display=swap");
+.limel {
+    font-family: "Limelight", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+.major {
+    font-family: "Major Mono Display", monospace;
+    font-weight: 1000;
+    font-style: normal;
+}
+.share {
+    font-family: "Share Tech Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+}

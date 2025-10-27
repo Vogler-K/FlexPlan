@@ -1,0 +1,44 @@
+.glass {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(2px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 2rem;
+    box-shadow:
+        0 8px 32px rgba(31, 38, 135, 0.2),
+        inset 0 4px 20px rgba(255, 255, 255, 0.3);
+}
+.darkglass {
+    position: relative;
+    background: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(2px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 2rem;
+    box-shadow:
+        0 8px 32px rgba(31, 38, 135, 0.2),
+        inset 0 4px 20px rgba(255, 255, 255, 0.3);
+}
+.glassbutton {
+    position: relative;
+    color: rgb(255, 255, 255);
+    padding: 1em;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(2px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 2rem;
+    box-shadow:
+        0 8px 32px rgba(31, 38, 135, 0.2),
+        inset 0 4px 20px rgba(255, 255, 255, 0.3);
+    transition:
+        background 0.2s,
+        color 0.2s;
+}
+.glassbutton:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: rgb(220, 220, 255);
+}
+
+.glassbutton:active {
+    background: rgba(170, 170, 255, 0.33);
+    color: rgb(180, 200, 255);
+}
