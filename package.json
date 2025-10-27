@@ -1,21 +1,21 @@
 {
-  "name": "flexplan",
-  "version": "1.0.0",
-  "description": "",
-  "homepage": "https://github.com/Vogler-K/FlexPlan#readme",
-  "bugs": {
-    "url": "https://github.com/Vogler-K/FlexPlan/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Vogler-K/FlexPlan.git"
-  },
-  "license": "SEE LICENSE IN LICENSE",
-  "author": "Vogler-K",
-  "type": "commonjs",
-  "main": "./src/main.js",
-  "scripts": {
-    "test": "browser-sync start --server 'public' --files 'public'",
-    "start": "node src/main.js"
-  }
+    "name": "flexplan",
+    "version": "1.0.0",
+    "description": "",
+    "homepage": "https://github.com/Vogler-K/FlexPlan#readme",
+    "bugs": {
+        "url": "https://github.com/Vogler-K/FlexPlan/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Vogler-K/FlexPlan.git"
+    },
+    "license": "SEE LICENSE IN LICENSE",
+    "author": "Vogler-K",
+    "type": "commonjs",
+    "main": "./src/main.js",
+    "scripts": {
+        "test": "browser-sync start --server 'public' --files 'public'",
+        "start": "node src/main.js"
+    }
 }
