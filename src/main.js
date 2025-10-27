@@ -5,6 +5,8 @@ const path = require("path");
 const PUBLIC = path.join(__dirname, "../public");
 const DATA_DIR = path.join(__dirname, "data");
 
+let rate_limits = {};
+
 // ====================
 // Static File Server
 // ====================
@@ -52,9 +54,12 @@ http
 function userFile(usercode) {
   return path.join(DATA_DIR, usercode + ".json");
 }
-function loadUserData(usercode) {
+function loadUserData(usercode, ip) {
   const file = userFile(usercode);
-  if (!fs.existsSync(file)) return null;
+  if (!fs.existsSync(file)) {
+    rate_limits[ip] = Date.now() + 5000;
+    return null;
+  }
   let content = fs.readFileSync(file, "utf-8").trim();
   if (!content || content === "{}") {
     const init = { "task-data": {}, "script-data": [] };
@@ -159,6 +164,16 @@ http
     // CORS
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    if (ip in rate_limits && rate_limits[ip] >= Date.now()) {
+      res.end();
+      return;
+    }
+    for (let ip in rate_limits) {
+      if (Date.now() > rate_limits[ip]) {
+        delete rate_limits[ip];
+      }
+    }
     if (req.method === "OPTIONS") {
       res.writeHead(200);
       res.end();
@@ -175,6 +190,9 @@ http
     if (req.method === "POST" && req.url === "/get-user") {
       readJsonBody(({ usercode }) => {
         const exists = fs.existsSync(userFile(usercode));
+        if (!exists) {
+          rate_limits[ip] = Date.now() + 5000;
+        }
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ valid: exists }));
       });
@@ -184,7 +202,7 @@ http
     // /get-calender
     if (req.method === "POST" && req.url === "/get-calender") {
       readJsonBody(({ usercode }) => {
-        const data = loadUserData(usercode);
+        const data = loadUserData(usercode, ip);
         if (!data) {
           res.writeHead(404, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "User existiert nicht" }));
@@ -203,7 +221,7 @@ http
     // /get-today
     if (req.method === "POST" && req.url === "/get-today") {
       readJsonBody(({ usercode }) => {
-        const data = loadUserData(usercode);
+        const data = loadUserData(usercode, ip);
         if (!data) {
           res.writeHead(404, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "User existiert nicht" }));
@@ -228,7 +246,7 @@ http
     // /get-script
     if (req.method === "POST" && req.url === "/get-script") {
       readJsonBody(({ usercode }) => {
-        const data = loadUserData(usercode);
+        const data = loadUserData(usercode, ip);
         if (!data) {
           res.writeHead(404, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "User existiert nicht" }));
@@ -262,7 +280,7 @@ http
     // /save-script
     if (req.method === "POST" && req.url === "/save-script") {
       readJsonBody(({ usercode, scripting_data }) => {
-        const data = loadUserData(usercode);
+        const data = loadUserData(usercode, ip);
         if (!data) {
           res.writeHead(404, { "Content-Type": "application/json" });
           res.end(JSON.stringify({ error: "User existiert nicht" }));
