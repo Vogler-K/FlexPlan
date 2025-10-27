@@ -1,0 +1,8 @@
+{
+  "task-data": {
+    "day.month.year": {
+      "TASKNAME": true
+    }
+  },
+  "script-data": ["Task \"TASKNAME\" every day;"]
+}
