@@ -17,6 +17,7 @@
     </head>
     <body>
         <div id="starcontain"></div>
+        <div id="overlay" class="trigger"></div>
         <div class="header glass">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +40,14 @@
                 </button>
             </div>
         </div>
-        <table id="calender" class="glass trigger" style="">
+        <div id="userlogin" class="glass trigger">
+            <span style="color: white">Please logon:</span>
+            <input id="userid" type="text" class="glassbutton" />
+            <button class="glassbutton major" id="checkuserbutton">
+                check user
+            </button>
+        </div>
+        <table id="calender" class="glass trigger" style="display: none">
             <thead>
                 <tr>
                     <th>Mo</th>

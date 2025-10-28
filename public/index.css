@@ -31,3 +31,34 @@ body {
     text-align: right;
     margin-left: auto;
 }
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* leicht abdunkeln */
+    z-index: 1999;
+    pointer-events: all;
+}
+#userlogin {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    height: 25vh;
+    width: 60vw;
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+#userlogin > * {
+    margin: 5px;
+}
+#userid {
+    text-align: center;
+}

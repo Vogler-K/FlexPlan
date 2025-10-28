@@ -1,12 +1,27 @@
-const usercode = "ZaU2"; //This is TEMPORARY and will be removed later, its only so i dont have to input the code EVERY time ;)
 const origin = window.location.origin.replace(/:\d+$/, "");
 let calender_data = {};
 let today_data = {};
 let scripting_data = [];
+let usercode = "";
 
-document.addEventListener("DOMContentLoaded", function () {
-    startApp();
-
+document.addEventListener("DOMContentLoaded", async function () {
+    const item = localStorage.getItem("usercode");
+    if (item) {
+        const parsed = JSON.parse(item);
+        if (parsed.expiry > Date.now()) {
+            const valid = await checkUser(origin, parsed.value);
+            if (!valid) {
+                usercode = "";
+                localStorage.removeItem("usercode");
+                return;
+            } else {
+                usercode = parsed.value;
+                startApp();
+            }
+        } else {
+            localStorage.removeItem("usercode");
+        }
+    }
     document.getElementById("c-button").onclick = function () {
         trigger("calender");
     };
@@ -19,20 +34,30 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("script").onchange = function () {
         saveScript(script, scripting_data);
     };
+    document.getElementById("checkuserbutton").onclick = async function () {
+        usercode = document.querySelector("#userid").value;
+        const valid = await checkUser(origin, usercode);
+        if (!valid) {
+            usercode.value = "";
+            return;
+        } else {
+            const expiry = Date.now() + 24 * 60 * 60 * 1000;
+            localStorage.setItem(
+                "usercode",
+                JSON.stringify({ value: usercode, expiry }),
+            );
+            startApp();
+        }
+    };
+    document.getElementById("logo").onclick = async function () {
+        localStorage.removeItem("usercode");
+        window.location.reload();
+    };
 });
 //╔════════════════════╗
 //║  Render Functions  ║
 //╚════════════════════╝
 async function startApp() {
-    while (!usercode) {
-        usercode = prompt("Bitte Usercode eingeben:");
-        if (!usercode) continue;
-        const valid = await checkUser(origin, usercode);
-        if (!valid) {
-            alert("Usercode ungültig!");
-            usercode = "";
-        }
-    }
     await loadData(calender_data, origin, usercode, "/get-calender");
     await loadData(today_data, origin, usercode, "/get-today");
     await loadData(scripting_data, origin, usercode, "/get-script");
@@ -41,6 +66,7 @@ async function startApp() {
     renderToDos();
     const script = document.querySelector("#script");
     renderScript(script, scripting_data);
+    trigger("calender");
 }
 
 function createCalender(calender_body) {

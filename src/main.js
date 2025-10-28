@@ -89,7 +89,8 @@ http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
     if (ip in rate_limits && rate_limits[ip] >= Date.now()) {
-        res.end();
+        res.writeHead(404, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: "User existiert nicht" }));
         return;
     }
     for (let ip in rate_limits) {
